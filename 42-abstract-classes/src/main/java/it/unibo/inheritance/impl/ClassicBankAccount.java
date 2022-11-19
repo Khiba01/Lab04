@@ -1,15 +1,21 @@
 package it.unibo.inheritance.impl;
 
+import it.unibo.inheritance.api.AccountHolder;
+
 public class ClassicBankAccount extends AbstractBankAccount {
 
-    @Override
-    protected boolean isWithdrawAllowed(double amount) {
-        return getBalance() >= amount;
+    public ClassicBankAccount(AccountHolder accountHolder, double balance) {
+        super(accountHolder, balance);
     }
 
     @Override
-    protected double computeFee() {
-        // TODO Auto-generated method stub
-        return 0;
+    public double computeFees() {
+        return MANAGEMENT_FEE;
+    }
+
+    @Override
+    public boolean isWithdrawAllowed(double amount) {
+        return true;
     }
 }
+

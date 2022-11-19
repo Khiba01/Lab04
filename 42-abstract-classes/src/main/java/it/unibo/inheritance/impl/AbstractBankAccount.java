@@ -5,64 +5,82 @@ import it.unibo.inheritance.api.BankAccount;
 
 public abstract class AbstractBankAccount implements BankAccount {
 
-    private static final double ATM_TRANSACTION_FEE = 1;
-    private static final double MANAGEMENT_FEE = 5;
-    private static final double TRANSACTION_FEE = 0.1;
-
-    //private final AccountHolder holder;
+    public static final double ATM_TRANSACTION_FEE = 1;
+    public static final double MANAGEMENT_FEE = 5;
+    private final AccountHolder holder;
     private double balance;
     private int transactions;
 
-    protected abstract boolean isWithdrawAllowed(final double amount);
+    protected AbstractBankAccount(final AccountHolder accountHolder, final double balance) {
+        this.holder = accountHolder;
+        this.balance = balance;
+        this.transactions = 0;
+    }
 
-    protected abstract double computeFee();
+    public final void chargeManagementFees(final int usrID) {
+        final double feeAmount = computeFees();
+        if (checkUser(usrID) && isWithdrawAllowed(feeAmount)) {
+            balance -= feeAmount;
+            resetTransactions();
+        }
+    }
 
-    @Override
-    public void chargeManagementFees(int id) {
-        // TODO Auto-generated method stub
-        
+    public final void deposit(final int usrID, final double amount) {
+        this.transactionOp(usrID, amount);
+    }
+
+    public final void depositFromATM(final int usrID, final double amount) {
+        this.deposit(usrID, amount - ATM_TRANSACTION_FEE);
     }
 
     @Override
-    public void deposit(int id, double amount) {
-        // TODO Auto-generated method stub
-        
+    public final AccountHolder getAccountHolder() {
+        return holder;
     }
 
-    @Override
-    public void depositFromATM(int id, double amount) {
-        // TODO Auto-generated method stub
-        
+    public final double getBalance() {
+        return this.balance;
     }
 
-    @Override
-    public AccountHolder getAccountHolder() {
-        // TODO Auto-generated method stub
-        return null;
+    protected final void setBalance(final double amount) {
+        this.balance = amount;
     }
 
-    @Override
-    public double getBalance() {
-        // TODO Auto-generated method stub
-        return 0;
+    public final int getTransactionsCount() {
+        return this.transactions;
     }
 
-    @Override
-    public int getTransactionsCount() {
-        // TODO Auto-generated method stub
-        return 0;
+    public final void withdraw(final int usrID, final double amount) {
+        if (isWithdrawAllowed(amount)) {
+            this.transactionOp(usrID, -amount);
+        }
     }
 
-    @Override
-    public void withdraw(int id, double amount) {
-        // TODO Auto-generated method stub
-        
+    public final void withdrawFromATM(final int usrID, final double amount) {
+        this.withdraw(usrID, amount + ATM_TRANSACTION_FEE);
     }
 
-    @Override
-    public void withdrawFromATM(int id, double amount) {
-        // TODO Auto-generated method stub
-        
+    protected boolean checkUser(final int id) {
+        return this.holder.getUserID() == id;
     }
-    
+
+    protected abstract double computeFees();
+
+    protected final void incrementTransactions() {
+        this.transactions++;
+    }
+
+    protected abstract boolean isWithdrawAllowed(double amount);
+
+    protected final void resetTransactions() {
+        this.transactions = 0;
+    }
+
+    private void transactionOp(final int usrID, final double amount) {
+        if (checkUser(usrID)) {
+            this.balance += amount;
+            this.incrementTransactions();
+        }
+    }
+
 }
