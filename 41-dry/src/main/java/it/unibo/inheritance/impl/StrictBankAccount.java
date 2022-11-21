@@ -24,20 +24,24 @@ public class StrictBankAccount implements BankAccount {
         }
     }
 
+    @Override
     public void deposit(final int id, final double amount) {
         this.transactionOp(id, amount);
     }
 
+    @Override
     public void withdraw(final int id, final double amount) {
         if (isWithdrawAllowed(amount)) {
             this.transactionOp(id, -amount);
         }
     }
 
+    @Override
     public void depositFromATM(final int id, final double amount) {
         this.deposit(id, amount - StrictBankAccount.ATM_TRANSACTION_FEE);
     }
 
+    @Override
     public void withdrawFromATM(final int id, final double amount) {
         this.withdraw(id, amount + StrictBankAccount.ATM_TRANSACTION_FEE);
     }
@@ -46,14 +50,17 @@ public class StrictBankAccount implements BankAccount {
         transactions++;
     }
 
+    @Override
     public double getBalance() {
         return this.balance;
     }
 
+    @Override
     public int getTransactionsCount() {
         return transactions;
     }
 
+    @Override
     public void chargeManagementFees(final int id) {
         final double feeAmount = MANAGEMENT_FEE + transactions * StrictBankAccount.TRANSACTION_FEE;
         if (checkUser(id) && isWithdrawAllowed(feeAmount)) {

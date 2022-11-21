@@ -17,6 +17,7 @@ public class SimpleBankAccount implements BankAccount {
         this.transactions = 0;
     }
 
+    @Override
     public void chargeManagementFees(final int id) {
         /*
          * Riduce il bilancio del conto di un ammontare pari alle spese di gestione
@@ -26,6 +27,7 @@ public class SimpleBankAccount implements BankAccount {
         }
     }
 
+    @Override
     public void deposit(final int id, final double amount) {
         /*
          * Incrementa il numero di transazioni e aggiunge amount al totale del
@@ -35,6 +37,7 @@ public class SimpleBankAccount implements BankAccount {
         this.transactionOp(id, amount);
     }
 
+    @Override
     public void depositFromATM(final int id, final double amount) {
         /*
          * Incrementa il numero di transazioni e aggiunge amount al totale del
@@ -45,6 +48,7 @@ public class SimpleBankAccount implements BankAccount {
         this.deposit(id, amount - SimpleBankAccount.ATM_TRANSACTION_FEE);
     }
 
+    @Override
     public double getBalance() {
         return this.balance;
     }
@@ -53,14 +57,17 @@ public class SimpleBankAccount implements BankAccount {
         this.balance = balance;
     }
 
+    @Override
     public int getTransactionsCount() {
         return this.transactions;
     }
+
 
     public int getid() {
         return this.id;
     }
 
+    @Override
     public void withdraw(final int id, final double amount) {
         /*
          * Incrementa il numero di transazioni e rimuove amount al totale del
@@ -70,6 +77,7 @@ public class SimpleBankAccount implements BankAccount {
         this.transactionOp(id, -amount);
     }
 
+    @Override
     public void withdrawFromATM(final int id, final double amount) {
         /*
          * Incrementa il numero di transazioni e rimuove amount + le spese
