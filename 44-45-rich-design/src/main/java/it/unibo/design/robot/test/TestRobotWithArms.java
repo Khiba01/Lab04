@@ -1,6 +1,9 @@
 package it.unibo.design.robot.test;
 
 import static it.unibo.design.robot.test.Assertions.assertEquals;
+import it.unibo.design.robot.impl.RobotWithTwoArms;
+import it.unibo.design.robot.impl.BaseRobot;
+import it.unibo.design.robot.environment.impl.RobotPosition;
 
 /**
  * Utility class for testing componible robots
@@ -18,8 +21,8 @@ public final class TestRobotWithArms {
 
     public static void main(final String[] args) {
         // Uncomment the method
-        /*
-        final RobotWithArms walle = new RobotWithTwoArms("Wall-e");
+    
+        final RobotWithTwoArms walle = new RobotWithTwoArms("Wall-e");
         final String wallePosition = walle + "'s position";
         final String walleItems = walle + "'s items carried";
         final String walleConsumption = walle + "'s consumption is correct";
@@ -31,7 +34,7 @@ public final class TestRobotWithArms {
         }
         consumptionEmpty -= walle.getBatteryLevel();
         walle.pickUp();
-        assertEquals(walleItems, 1, walle.getCarriedItemsCount());
+        assertEquals(walleItems, 1, walle.carrieditems());
         double consumption1Item = walle.getBatteryLevel();
         for (int i = 0; i < CYCLES; i++) {
             walle.moveUp();
@@ -39,7 +42,7 @@ public final class TestRobotWithArms {
         consumption1Item -= walle.getBatteryLevel();
         assertEquals(walleConsumption, true, consumption1Item > consumptionEmpty);
         walle.pickUp();
-        assertEquals(walleItems, 2, walle.getCarriedItemsCount());
+        assertEquals(walleItems, 2, walle.carrieditems());
         double consumption2Item = walle.getBatteryLevel();
         for (int i = 0; i < CYCLES; i++) {
             walle.moveUp();
@@ -47,13 +50,13 @@ public final class TestRobotWithArms {
         consumption2Item -= walle.getBatteryLevel();
         assertEquals(walleConsumption, true, consumption2Item > consumption1Item);
         walle.pickUp();
-        assertEquals(walleItems, 2, walle.getCarriedItemsCount());
+        assertEquals(walleItems, 2, walle.carrieditems());
         walle.dropDown();
-        assertEquals(walleItems, 1, walle.getCarriedItemsCount());
+        assertEquals(walleItems, 1, walle.carrieditems());
         walle.dropDown();
-        assertEquals(walleItems, 0, walle.getCarriedItemsCount());
+        assertEquals(walleItems, 0, walle.carrieditems());
         walle.dropDown();
-        assertEquals(walleItems, 0, walle.getCarriedItemsCount());
-        */
+        assertEquals(walleItems, 0, walle.carrieditems());
+    
     }
 }
